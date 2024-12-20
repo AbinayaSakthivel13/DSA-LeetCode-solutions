@@ -10,7 +10,8 @@ public:
             else if(tolower(s[left]) != tolower(s[right]))
                 return false;
             else{
-                left++;right--;}
+                left++;right--;
+                }
         }
         return true;
     }
