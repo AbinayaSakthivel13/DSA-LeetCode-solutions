@@ -1,32 +1,35 @@
 class Solution {
 public:
+    vector<int> xd = {0, 0, 1, -1};
+    vector<int> yd = {1, -1, 0, 0};
     int minCost(vector<vector<int>>& grid) {
-        int m = grid.size(), n = grid[0].size();
-        vector<vector<int>> dist(m, vector<int>(n, INT_MAX));
-        deque<pair<int, int>> dq;
-        int dx[4] = {0, 0, 1, -1}, dy[4] = {1, -1, 0, 0};
-        
-        dq.push_front({0, 0});
-        dist[0][0] = 0;
+        int n = grid.size();
+        int m = grid[0].size();
+        set<tuple<int, int, int>> s;
+        s.insert({0, 0, 0});
 
-        while (!dq.empty()) {
-            auto [x, y] = dq.front();
-            dq.pop_front();
-            int curDir = grid[x][y] - 1;
-
-            for (int dir = 0; dir < 4; dir++) {
-                int nx = x + dx[dir], ny = y + dy[dir];
-                if (nx < 0 || ny < 0 || nx >= m || ny >= n) continue;
-
-                int cost = dist[x][y] + (dir == curDir ? 0 : 1);
-                if (cost < dist[nx][ny]) {
-                    dist[nx][ny] = cost;
-                    if (dir == curDir) dq.push_front({nx, ny});
-                    else dq.push_back({nx, ny});
+        vector<vector<int>> dis(n, vector<int>(m, INT_MAX));
+        dis[0][0] = 0;
+        while (!s.empty()) {
+            auto [cost, x, y] = *(s.begin());
+            s.erase(s.begin());
+            if (x == n - 1 && y == m - 1) {
+                return cost;
+            }
+            int p = grid[x][y];
+            for (int i = 1; i <= 4; i++) {
+                if (x + xd[i - 1] >= 0 && x + xd[i - 1] < n &&
+                    y + yd[i - 1] >= 0 && y + yd[i - 1] < m) {
+                    if (!(p == i) + dis[x][y] <
+                        dis[x + xd[i - 1]][y + yd[i - 1]]) {
+                        dis[x + xd[i - 1]][y + yd[i - 1]] =
+                            !(p == i) + dis[x][y];
+                        s.insert({dis[x + xd[i - 1]][y + yd[i - 1]],
+                                  x + xd[i - 1], y + yd[i - 1]});
+                    }
                 }
             }
         }
-
-        return dist[m - 1][n - 1];
+        return 0;
     }
 };
