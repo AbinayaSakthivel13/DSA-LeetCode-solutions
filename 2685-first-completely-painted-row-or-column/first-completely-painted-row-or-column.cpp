@@ -1,21 +1,16 @@
 class Solution {
 public:
     int firstCompleteIndex(vector<int>& arr, vector<vector<int>>& mat) {
-        int rows = mat.size(), cols = mat[0].size();
-        unordered_map<int, pair<int, int>> positionMap;
-        vector<int> rowCount(rows, cols), colCount(cols, rows);
-        for (int r = 0; r < rows; ++r) {
-            for (int c = 0; c < cols; ++c) {
-                positionMap[mat[r][c]] = {r, c};
+        unordered_map<int, int> mpr, mpc, mprc, mpcc;
+        for(int i = 0; i < mat.size(); i++){
+            for(int j = 0; j< mat[0].size(); ++j){
+                mpr[mat[i][j]] = i;     mpc[mat[i][j]] = j;
             }
         }
-        for (int idx = 0; idx < arr.size(); ++idx) {
-            int val = arr[idx];
-            auto [row, col] = positionMap[val];
-
-            if (--rowCount[row] == 0 || --colCount[col] == 0) {
-                return idx;
-            }
+        for(int i = 0; i < arr.size(); i++){
+            int n = arr[i];
+            mprc[mpr[n]]++;    mpcc[mpc[n]]++;
+            if(mprc[mpr[n]] == mat[0].size() || mpcc[mpc[n]] == mat.size()) return i;
         }
         return -1;
     }
