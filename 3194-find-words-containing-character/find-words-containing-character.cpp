@@ -3,10 +3,9 @@ public:
     static vector<int> findWordsContaining(vector<string>& words, char x) {
         const int n=words.size();
         vector<int> ans;
-        for(int i=0; i<n; i++){
-            if (words[i].find(x)!=-1)
-                ans.push_back(i);
-        }
+        for_each(words.begin(), words.end(), [&](auto& w) mutable{
+            if (w.find(x)!=-1) ans.push_back(&w-&words[0]);
+        });
         return ans;
     }
 };
