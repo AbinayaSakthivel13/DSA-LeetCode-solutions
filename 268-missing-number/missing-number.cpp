@@ -2,10 +2,10 @@ class Solution {
 public:
     int missingNumber(vector<int>& nums) {
         int n=nums.size();
-        int expected_sum = n*(n+1)/2;
-        int cal_sum=0;
-        for(int i=0;i<n;i++)
-            cal_sum+=nums[i];
-        return expected_sum-cal_sum;
+        int exp_tot=n*(n+1)/2;
+        int act_tot=0;
+        for(int num:nums)
+            act_tot+=num;
+        return exp_tot-act_tot;
     }
 };
