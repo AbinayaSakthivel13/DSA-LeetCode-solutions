@@ -1,16 +1,17 @@
 class Solution {
 public:
     double myPow(double x, int n) {
-        double res=1;
-        if(n<0){
-            x=1/x;
+        long long N = n; 
+        if (N < 0) {
+            x = 1 / x;
+            N = -N;
         }
-        long pow=labs(n);
-        while(pow){
-            if((pow & 1)!=0)
-                res*=x;
-            x*=x;
-            pow>>=1;
+        double res=1.0;
+        double cur=x;
+        for(long long i=N;i>0;i/=2){
+            if(i%2 == 1)
+                res=res*cur;
+            cur=cur*cur;
         }
         return res;
     }
