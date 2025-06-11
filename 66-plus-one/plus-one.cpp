@@ -10,8 +10,8 @@ public:
             else
                 digits[i]=0;
         }
-        vector<int> Allnine(n+1);
-        Allnine[0]=1;
-        return Allnine;
+        vector<int> onlyNine(n+1,0);
+        onlyNine[0]=1;
+        return onlyNine;
     }
 };
