@@ -7,8 +7,8 @@ public:
             freq[nums[i]]++;
         for(auto num:freq){
             if(num.second==1)
-                res=num.first;
+                return num.first;
         }
-        return res;
+        return -1;
     }
 };
