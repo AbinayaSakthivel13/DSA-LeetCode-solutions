@@ -1,0 +1,14 @@
+class Solution {
+public:
+    int singleNumber(vector<int>& nums) {
+        unordered_map<int,int> freq;
+        int res=0;
+        for(int i=0;i<nums.size();i++)
+            freq[nums[i]]++;
+        for(auto num:freq){
+            if(num.second==1)
+                res=num.first;
+        }
+        return res;
+    }
+};
