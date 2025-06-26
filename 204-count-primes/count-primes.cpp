@@ -1,15 +1,16 @@
 class Solution {
 public:
     int countPrimes(int n) {
-        vector<bool> seen(n, false);
-        int ans=0;
-        for(int i=2;i<n;i++){
-            if(seen[i])
-                continue;
-            ans++;
-            for(long mult=(long)i*i; mult<n; mult+=i)
-                seen[mult]=true;
+        if(n<=2)
+            return 0;
+        vector<bool> is_prime(n,true);
+        is_prime[0]=is_prime[1]=false;
+        for(int i=2;i*i<n;i++){
+            if(is_prime[i]){
+                for(int mult=i*i;mult<n;mult+=i)
+                    is_prime[mult]=false;
+            }
         }
-        return ans;
+        return count(is_prime.begin(),is_prime.end(),true);
     }
 };
