@@ -5,23 +5,23 @@ public:
             return "";
         int start=0, end=0;
         for(int i=0;i<s.length();i++){
-            int odd=expandAroundCenter(s,i,i);
-            int even=expandAroundCenter(s,i,i+1);
-            int max_len=max(odd,even);
+            int odd=expandAroundCenter(s, i, i);
+            int even=expandAroundCenter(s, i, i+1);
+            int maxlen=max(odd, even);
 
-            if(max_len>end-start){
-                start=i-(max_len-1)/2;
-                end=i+max_len/2;
+            if(maxlen>end-start){
+                start=i-(maxlen-1)/2;
+                end=i+maxlen/2;
             }
         }
-        return s.substr(start,end-start+1);
+        return s.substr(start, end-start+1);
     }
 private:
-    int expandAroundCenter(string s, int left, int right){
-        while(left>=0 && right<s.length() && s[left]==s[right]){
-            left--;
-            right++;
+    int expandAroundCenter(string s, int l, int r){
+        while(l>=0 && r<s.length() && s[l]==s[r]){
+            l--;
+            r++;
         }
-        return right-left-1;
+        return r-l-1;
     }
 };
