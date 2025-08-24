@@ -20,7 +20,7 @@ public:
             int sum=d1+d2+carry;
             int dig=sum%10;
             carry=sum/10;
-            ListNode* newNode = new ListNode(dig);
+            ListNode* newNode=new ListNode(dig);
             if(!head){
                 head=newNode;
                 tail=newNode;
@@ -29,8 +29,8 @@ public:
                 tail->next=newNode;
                 tail=tail->next;
             }
-            l1=(l1!=nullptr)? l1->next:nullptr;
-            l2=(l2!=nullptr)? l2->next:nullptr;
+            l1=(l1!=nullptr)?l1->next:nullptr;
+            l2=(l2!=nullptr)?l2->next:nullptr;
         }
         return head;
     }
