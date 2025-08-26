@@ -1,31 +1,16 @@
-/*class Solution {
-public:
-    int lengthOfLIS(vector<int>& nums) {
-        int n=nums.size();
-        vector<int> dp(n,1);
-        for(int i=n;i>=0;i--){
-            for(int j=i+1;j<n;j++){
-                if(nums[j]>nums[i])
-                    dp[i]=max(dp[i],dp[j]+1);
-            }
-        }
-        int ans=0;
-        for(int i=0;i<n;i++)
-            ans=max(ans,dp[i]);
-        return ans;
-    }
-};*/
 class Solution {
 public:
-    int lengthOfLIS(vector<int>& nums){
-        vector<int> sub;
-
-        for(int num: nums){
-            auto it = lower_bound(sub.begin(), sub.end(), num);
-            if(it == sub.end()) sub.push_back(num);
-            else *it = num;
+    int lengthOfLIS(vector<int>& nums) {
+        int n=nums.size(), longest=INT_MIN;
+        vector<int> dp(n,1);
+        for(int i=n-1;i>=0;i--){
+            for(int j=i+1;j<n;j++){
+                if(nums[j]>nums[i])
+                    dp[i]=max(dp[i], dp[j]+1);
+            }
         }
-
-        return sub.size();
+        for(int num:dp)
+            longest=max(num,longest);
+        return longest;
     }
 };
