@@ -20,8 +20,7 @@ private:
             return true;
         if(n1==nullptr || n2==nullptr)
             return false;
-        return n1->val==n2->val &&
-                helper(n1->left,n2->right) && 
-                helper(n1->right,n2->left);
+        return n1->val==n2->val && 
+                helper(n1->left,n2->right) && helper(n1->right,n2->left);
     }
 };
