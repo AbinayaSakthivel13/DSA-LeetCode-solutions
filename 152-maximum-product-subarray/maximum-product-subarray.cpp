@@ -14,13 +14,13 @@ public:
 class Solution {
 public:
     int maxProduct(vector<int>& nums) {
-        int res=*max_element(nums.begin(),nums.end());
+        int res=*max_element(nums.begin(), nums.end());
         int curMax=1, curMin=1;
         for(int num:nums){
             int temp=curMax*num;
             curMax=max({temp, curMin*num, num});
             curMin=min({temp, curMin*num, num});
-            res=max(res, curMax);
+            res=max(res,curMax);
         }
         return res;
     }
