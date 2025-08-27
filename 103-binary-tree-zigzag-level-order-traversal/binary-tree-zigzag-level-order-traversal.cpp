@@ -15,7 +15,7 @@ public:
         if(!root) return {};
         queue<TreeNode*>q;
         q.push(root);
-        vector<vector<int>>v;
+        vector<vector<int>> res;
         int flag =0;
         while(!q.empty())
         {
@@ -31,15 +31,11 @@ public:
                 temp[index] = x->val;
             }
             if(flag==0) 
-            {
                 flag++;
-            }
             else
-            { 
                 flag--;
-            } 
-            v.push_back(temp);
+            res.push_back(temp);
         }
-        return v;
+        return res;
     }
 };
