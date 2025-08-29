@@ -11,17 +11,16 @@
  */
 class Solution {
 public:
-    int num=-1, diff=INT_MAX;
+    int diff=INT_MAX, num=-1;
     int getMinimumDifference(TreeNode* root) {
         helper(root);
         return diff;
     }
     void helper(TreeNode* root){
-        if(!root)
-            return;
+        if(!root)   return;
         helper(root->left);
-        if(num!=-1) 
-            diff=min(diff, abs(root->val-num));
+        if(num!=-1)
+            diff=min(diff,abs(num-root->val));
         num=root->val;
         helper(root->right);
     }
