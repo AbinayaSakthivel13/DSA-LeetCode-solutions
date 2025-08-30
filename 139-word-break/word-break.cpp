@@ -1,4 +1,4 @@
-/*class Solution {
+class Solution {
 public:
     bool wordBreak(string s, vector<string>& wordDict) {
         vector<int> memo(s.length(),-1);
@@ -18,11 +18,8 @@ public:
         }
         return memo[ind]=false;
     }
-};*/
-#include <bits/stdc++.h>
-using namespace std;
-
-class Solution {
+};
+/*class Solution {
 public:
     bool wordBreak(string s, vector<string>& wordDict) {
         unordered_set<string> dict(wordDict.begin(), wordDict.end());
@@ -42,4 +39,4 @@ public:
 
         return dp[n];
     }
-};
+};*/
