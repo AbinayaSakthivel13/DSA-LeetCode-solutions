@@ -7,10 +7,8 @@ public:
             return false;
         char temp=board[x][y];
         board[x][y]='#';
-        bool found = dfs(board, word, i+1, x+1, y) ||
-                     dfs(board, word, i+1, x-1, y) ||
-                     dfs(board, word, i+1, x, y+1) ||
-                     dfs(board, word, i+1, x, y-1);
+        bool found=dfs(board, word, i+1, x-1, y) || dfs(board, word, i+1, x+1, y)||
+                    dfs(board, word, i+1, x, y-1) || dfs(board, word, i+1, x, y+1);
         board[x][y]=temp;
         return found;
     }
@@ -18,7 +16,7 @@ public:
         int m=board.size(), n=board[0].size();
         for(int i=0;i<m;i++){
             for(int j=0;j<n;j++){
-                if(board[i][j]==word[0] && dfs(board,word,0,i,j))
+                if(board[i][j]==word[0] && dfs(board, word, 0, i, j))
                     return true;
             }
         }
