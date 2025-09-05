@@ -1,77 +1,72 @@
-class LRUCache {
+class Node {
 public:
-    class Node{
-        public: 
-            int key;
-            int val;
-            Node* prev;
-            Node* next;
+    int key;
+    int val;
+    Node* prev;
+    Node* next;
+    Node(int k, int v) : key(k), val(v), prev(nullptr), next(nullptr) {}
+};
 
-            Node(int key, int val){
-                this->key = key;
-                this->val = val;
-            }
-    };
-
-    Node* head = new Node(-1, -1);
-    Node* tail = new Node(-1, -1);
-
+class LRUCache {
+private:
     int cap;
-    unordered_map<int, Node*> m;
+    unordered_map<int, Node*> cache;
+    Node* left;   // Dummy head (least recently used)
+    Node* right;  // Dummy tail (most recently used)
 
+    // Remove a node from the list
+    void remove(Node* node) {
+        Node* prevNode = node->prev;
+        Node* nextNode = node->next;
+        prevNode->next = nextNode;
+        nextNode->prev = prevNode;
+    }
+
+    // Insert a node right before the dummy tail (most recently used position)
+    void insert(Node* node) {
+        Node* prevNode = right->prev;
+        prevNode->next = node;
+        node->prev = prevNode;
+        node->next = right;
+        right->prev = node;
+    }
+
+public:
     LRUCache(int capacity) {
         cap = capacity;
-        head -> next = tail;
-        tail -> prev = head;
-    }
-
-    void addNode(Node* newnode){
-        Node* temp = head -> next;
-
-        newnode -> next = temp;
-        newnode -> prev = head;
-
-        head -> next = newnode;
-        temp -> prev = newnode;
-    }
-
-    void deleteNode(Node* delnode){
-        Node* prevv = delnode -> prev;
-        Node* nextt = delnode -> next;
-
-        prevv -> next = nextt;
-        nextt -> prev = prevv;
+        cache.clear();
+        left = new Node(0, 0);   // Dummy head
+        right = new Node(0, 0);  // Dummy tail
+        left->next = right;
+        right->prev = left;
     }
     
     int get(int key) {
-        if(m.find(key) != m.end()){
-            Node* resNode = m[key];
-            int ans = resNode -> val;
-
-            m.erase(key);
-            deleteNode(resNode);
-            addNode(resNode);
-
-            m[key] = head -> next;
-            return ans;
+        if (cache.find(key) != cache.end()) {
+            Node* node = cache[key];
+            remove(node);   // Move it to the most recently used position
+            insert(node);
+            return node->val;
         }
         return -1;
     }
     
     void put(int key, int value) {
-        if(m.find(key) != m.end()){
-            Node* curr = m[key];
-            m.erase(key);
-            deleteNode(curr);
+        if (cache.find(key) != cache.end()) {
+            remove(cache[key]);
         }
 
-        if(m.size() == cap){
-            m.erase(tail -> prev -> key);
-            deleteNode(tail -> prev);
-        }
+        Node* newNode = new Node(key, value);
+        cache[key] = newNode;
+        insert(newNode);
 
-        addNode(new Node(key, value));
-        m[key] = head -> next;
+        // If over capacity, remove least recently used node
+        if (cache.size() > cap) {
+            Node* lru = left->next;
+            remove(lru);
+            cache.erase(lru->key);
+            delete lru;
+        }
     }
 };
 
