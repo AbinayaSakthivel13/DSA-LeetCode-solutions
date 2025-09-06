@@ -21,7 +21,6 @@ public:
         }
         int swap=k%size;
         while(swap--){
-            temp=head;
             ListNode* start=head, *prev=head, *cur=head->next;
             while(cur->next){
                 prev=prev->next;
