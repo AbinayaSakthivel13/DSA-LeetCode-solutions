@@ -1,19 +1,24 @@
 class Solution {
 public:
     string convert(string s, int numRows) {
-        if (numRows == 1) return s;
-        char a[10000];
-        std::size_t len = s.length();
-        int index =0;
-        for (int i = 0; i < numRows; i++) {
-            for (int j = i; j < len; j +=2*(numRows-1)) {
-                a[index++] = s[j];
-                if (i > 0 && i<numRows-1 && j+2*(numRows-1)-2*i<len) {
-                    a[index++] = s[j + 2*(numRows - 1)-2*i];
+        if(numRows == 1) return s;
+
+        string ans;
+        int cycleLen = 2 * numRows - 2;
+
+        for(int row = 0; row < numRows; row++)
+        {
+            for(int j = row; j<s.length(); j += cycleLen)
+            {
+                ans+=s[j];
+
+                int secondJump = j + cycleLen - 2*row;
+                if(row != 0 && row != numRows - 1 && secondJump < s.size())
+                {
+                    ans += s[secondJump];
                 }
             }
         }
-        a[index]='\0';
-        return a;
+        return ans;
     }
 };
